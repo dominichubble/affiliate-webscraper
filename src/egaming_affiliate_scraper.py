@@ -6,7 +6,7 @@ Reads operator names and affiliate sites from CSV files
 """
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from urllib.parse import urljoin, urlparse, urlunparse
 import time
 import json
@@ -218,17 +218,37 @@ class EGamingAffiliateScraper:
         links = []
         base_domain = f"{urlparse(base_url).scheme}://{urlparse(base_url).netloc}"
         
+        # Find all anchor tags with href attributes
         for link in soup.find_all('a', href=True):
-            href = link['href'].strip()
-            if not href or href.startswith('#'):
+            try:
+                # Ensure we have a Tag object (not NavigableString)
+                if not isinstance(link, Tag):
+                    continue
+                
+                # Get href attribute - BeautifulSoup ensures href exists due to href=True
+                href_value = link.get('href')
+                if not href_value:
+                    continue
+                
+                # Handle the case where href might be a list or string
+                if isinstance(href_value, list):
+                    href = href_value[0] if href_value else ''
+                else:
+                    href = str(href_value)
+                
+                href = href.strip()
+                if not href or href.startswith('#'):
+                    continue
+                
+                # Convert relative URLs to absolute
+                full_url = urljoin(base_url, href)
+                normalized_url = self.normalize_url(full_url)
+                
+                if self.is_valid_url(normalized_url, base_domain):
+                    links.append(normalized_url)
+            except (KeyError, AttributeError, TypeError):
+                # Skip links that can't be processed
                 continue
-            
-            # Convert relative URLs to absolute
-            full_url = urljoin(base_url, href)
-            normalized_url = self.normalize_url(full_url)
-            
-            if self.is_valid_url(normalized_url, base_domain):
-                links.append(normalized_url)
         
         return list(set(links))  # Remove duplicates
     

@@ -29,14 +29,12 @@ Examples:
     
     parser.add_argument(
         '--operators',
-        default='egaming_operators.csv',
-        help='CSV file containing gaming operators (default: egaming_operators.csv)'
+        help='CSV file containing gaming operators (default: data/egaming_operators.csv)'
     )
     
     parser.add_argument(
         '--sites', 
-        default='affiliate_sites.csv',
-        help='CSV file containing affiliate sites to scan (default: affiliate_sites.csv)'
+        help='CSV file containing affiliate sites to scan (default: data/affiliate_sites.csv)'
     )
     
     parser.add_argument(
@@ -78,6 +76,13 @@ Examples:
     )
 
     args = parser.parse_args()
+    
+    # Set default paths if not provided
+    data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
+    if not args.operators:
+        args.operators = os.path.join(data_dir, 'egaming_operators.csv')
+    if not args.sites:
+        args.sites = os.path.join(data_dir, 'affiliate_sites.csv')
     
     # Validate input files
     if not os.path.exists(args.operators):
@@ -131,14 +136,24 @@ Examples:
         # Generate file names
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         
+        # Create output directory if it doesn't exist
+        output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'output')
+        os.makedirs(output_dir, exist_ok=True)
+        
         if not args.summary_only:
-            output_file = args.output or f"egaming_findings_{timestamp}.csv"
+            if args.output:
+                # If user provided a custom output file, use it as-is
+                output_file = args.output
+            else:
+                # Use default output directory
+                output_file = os.path.join(output_dir, f"egaming_findings_{timestamp}.csv")
+            
             scraper.save_results_to_csv(matches, output_file)
             print(f"Detailed results saved to: {output_file}")
         
         # Generate summary
         summary = scraper.generate_summary_report(matches)
-        summary_file = f"egaming_summary_{timestamp}.json"
+        summary_file = os.path.join(output_dir, f"egaming_summary_{timestamp}.json")
         
         with open(summary_file, 'w') as f:
             json.dump(summary, f, indent=2)

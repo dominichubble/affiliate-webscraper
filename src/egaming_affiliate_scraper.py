@@ -307,6 +307,11 @@ class EGamingAffiliateScraper:
             self.logger.warning("No matches to save")
             return
         
+        # Ensure output directory exists
+        output_dir = os.path.dirname(output_file)
+        if output_dir and not os.path.exists(output_dir):
+            os.makedirs(output_dir, exist_ok=True)
+        
         df = pd.DataFrame(matches)
         df.to_csv(output_file, index=False)
         self.logger.info(f"Results saved to {output_file}")
@@ -344,16 +349,21 @@ def main():
     """Example usage of the E-Gaming Affiliate Scraper"""
     scraper = EGamingAffiliateScraper(max_pages_per_site=15, delay=2.0)
     
+    # Get paths to data files
+    data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
+    operators_file = os.path.join(data_dir, 'egaming_operators.csv')
+    sites_file = os.path.join(data_dir, 'affiliate_sites.csv')
+    
     # Load data from CSV files
-    scraper.load_operators_from_csv('egaming_operators.csv')
-    scraper.load_affiliate_sites_from_csv('affiliate_sites.csv')
+    scraper.load_operators_from_csv(operators_file)
+    scraper.load_affiliate_sites_from_csv(sites_file)
     
     if not scraper.operators:
-        print("No operators loaded. Please check egaming_operators.csv file.")
+        print(f"No operators loaded. Please check {operators_file} file.")
         return
     
     if not scraper.affiliate_sites:
-        print("No affiliate sites loaded. Please check affiliate_sites.csv file.")
+        print(f"No affiliate sites loaded. Please check {sites_file} file.")
         return
     
     # Perform the scraping
@@ -362,12 +372,17 @@ def main():
     
     # Save results
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_file = f"egaming_findings_{timestamp}.csv"
+    
+    # Create output directory if it doesn't exist
+    output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'output')
+    os.makedirs(output_dir, exist_ok=True)
+    
+    output_file = os.path.join(output_dir, f"egaming_findings_{timestamp}.csv")
     scraper.save_results_to_csv(matches, output_file)
     
     # Generate and save summary
     summary = scraper.generate_summary_report(matches)
-    summary_file = f"egaming_summary_{timestamp}.json"
+    summary_file = os.path.join(output_dir, f"egaming_summary_{timestamp}.json")
     with open(summary_file, 'w') as f:
         json.dump(summary, f, indent=2)
     

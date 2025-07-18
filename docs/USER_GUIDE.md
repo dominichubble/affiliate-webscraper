@@ -3,9 +3,10 @@
 ## Getting Started
 
 ### Step 1: Launch the Application
-- **Double-click `start_ui.bat`** (Windows)
+- **Double-click `START_HERE.bat`** (recommended - automatically opens browser)
+- **Or double-click `start_ui.bat`** (alternative method)
 - **Or right-click `start_ui.ps1`** → "Run with PowerShell"
-- Choose "1" for Simple UI when prompted
+- The web browser will open automatically
 
 ### Step 2: Check Your Data
 The application will show if your data files are ready:
@@ -150,4 +151,4 @@ If problems persist:
 
 ---
 
-**Need help getting started?** Double-click `start_ui.bat` and follow the steps!
+**Need help getting started?** Double-click `START_HERE.bat` and follow the steps!

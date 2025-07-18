@@ -5,9 +5,10 @@ A user-friendly tool to find gaming operators mentioned on affiliate websites.
 ## 🚀 Quick Start
 
 ### For Non-Technical Users
-1. **Double-click `start_ui.bat`** 
-2. Web browser will open automatically
-3. Follow the 3-step process in the interface
+1. **Double-click `START_HERE.bat`** (recommended)
+2. **Or double-click `start_ui.bat`** (alternative)
+3. Web browser will open automatically
+4. Follow the 3-step process in the interface
 
 ### For Technical Users
 ```bash
@@ -24,7 +25,8 @@ python src/egaming_scraper_cli.py --help
 ## 📁 Project Structure
 
 ```
-├── start_ui.bat           # 🎯 START HERE - Double-click to launch UI
+├── START_HERE.bat         # 🎯 RECOMMENDED - Double-click to launch UI
+├── start_ui.bat           # Alternative launcher
 ├── simple_ui.py           # Web interface
 ├── data/                  # Your input CSV files
 │   ├── egaming_operators.csv
@@ -72,4 +74,4 @@ Each result includes:
 
 ---
 
-**Ready to start?** Double-click `start_ui.bat` 🚀
+**Ready to start?** Double-click `START_HERE.bat` 🚀

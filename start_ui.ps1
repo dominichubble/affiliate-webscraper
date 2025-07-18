@@ -58,19 +58,33 @@ try {
 
 Write-Host ""
 Write-Host "Starting web interface..." -ForegroundColor Yellow
-Write-Host "A browser window will open automatically." -ForegroundColor Cyan
-Write-Host "If it doesn't, go to: http://localhost:8501" -ForegroundColor Cyan
+Write-Host "Opening browser automatically..." -ForegroundColor Green
+Write-Host "If the browser doesn't open, go to: http://localhost:8501" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Press Ctrl+C to stop the application" -ForegroundColor Yellow
 Write-Host ""
 
-# Start the Streamlit app
+# Start the Streamlit app in background
 try {
     if (Test-Path $streamlitCmd) {
-        & $streamlitCmd run simple_ui.py --server.headless=false --server.port=8501 --server.address=localhost
+        Start-Process -FilePath $streamlitCmd -ArgumentList "run", "simple_ui.py", "--server.headless=true", "--server.port=8501", "--server.address=localhost" -NoNewWindow
     } else {
-        & $pythonCmd -m streamlit run simple_ui.py --server.headless=false --server.port=8501 --server.address=localhost
+        Start-Process -FilePath $pythonCmd -ArgumentList "-m", "streamlit", "run", "simple_ui.py", "--server.headless=true", "--server.port=8501", "--server.address=localhost" -NoNewWindow
     }
+    
+    # Wait a moment for the server to start
+    Start-Sleep -Seconds 3
+    
+    # Open the browser
+    Start-Process "http://localhost:8501"
+    
+    Write-Host "Web interface is now running in your browser!" -ForegroundColor Green
+    Write-Host "Close this window or press Ctrl+C to stop the application." -ForegroundColor Yellow
+    Write-Host ""
+    
+    # Keep the script running
+    Read-Host "Press Enter to stop the application"
+    
 } catch {
     Write-Host "Error starting the application: $_" -ForegroundColor Red
     Read-Host "Press Enter to exit"

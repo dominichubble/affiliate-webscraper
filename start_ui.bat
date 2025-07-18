@@ -45,15 +45,28 @@ if %errorlevel% neq 0 (
 
 echo.
 echo Starting web interface...
-echo If the browser doesn't open automatically, go to: http://localhost:8501
+echo Opening browser automatically...
+echo If the browser doesn't open, go to: http://localhost:8501
 echo.
 echo Press Ctrl+C to stop the application
 echo.
 
+REM Start Streamlit in background and then open browser
 if exist ".venv\Scripts\streamlit.exe" (
-    ".venv\Scripts\streamlit.exe" run simple_ui.py --server.headless=false --server.port=8501 --server.address=localhost
+    start /b ".venv\Scripts\streamlit.exe" run simple_ui.py --server.headless=true --server.port=8501 --server.address=localhost
 ) else (
-    streamlit run simple_ui.py --server.headless=false --server.port=8501 --server.address=localhost
+    start /b streamlit run simple_ui.py --server.headless=true --server.port=8501 --server.address=localhost
 )
 
-pause
+REM Wait a moment for the server to start
+timeout /t 3 /nobreak >nul
+
+REM Open the browser
+start http://localhost:8501
+
+REM Wait for user to stop the application
+echo.
+echo Web interface is now running in your browser!
+echo Close this window or press Ctrl+C to stop the application.
+echo.
+pause >nul

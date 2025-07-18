@@ -113,6 +113,9 @@ def main():
     print("\nTo start the UI:")
     print("  - Double-click start_ui.bat")
     print("  - Or run: streamlit run simple_ui.py")
+    print("\nFor help:")
+    print("  - See docs/USER_GUIDE.md for detailed instructions")
+    print("  - See docs/TECHNICAL.md for advanced configuration")
     
     return True
 

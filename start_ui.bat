@@ -3,26 +3,10 @@ echo ==========================================
 echo   E-Gaming Affiliate Scraper Web UI
 echo ==========================================
 echo.
-echo This will start a web interface for the scraper.
-echo Choose which interface you'd like to use:
+echo Starting the web interface...
+echo A browser window will open automatically.
 echo.
-echo 1. Simple UI (recommended for beginners)
-echo 2. Advanced UI (more features and controls)
-echo.
-set /p choice="Enter your choice (1 or 2): "
 
-if "%choice%"=="1" (
-    set app_file=simple_ui.py
-    echo Starting Simple UI...
-) else if "%choice%"=="2" (
-    set app_file=app.py
-    echo Starting Advanced UI...
-) else (
-    echo Invalid choice. Starting Simple UI by default...
-    set app_file=simple_ui.py
-)
-
-echo.
 echo Checking Python environment...
 
 REM Check if virtual environment exists
@@ -61,16 +45,15 @@ if %errorlevel% neq 0 (
 
 echo.
 echo Starting web interface...
-echo A browser window will open automatically.
-echo If it doesn't, go to: http://localhost:8501
+echo If the browser doesn't open automatically, go to: http://localhost:8501
 echo.
 echo Press Ctrl+C to stop the application
 echo.
 
 if exist ".venv\Scripts\streamlit.exe" (
-    ".venv\Scripts\streamlit.exe" run %app_file% --server.headless=false --server.port=8501 --server.address=localhost
+    ".venv\Scripts\streamlit.exe" run simple_ui.py --server.headless=false --server.port=8501 --server.address=localhost
 ) else (
-    streamlit run %app_file% --server.headless=false --server.port=8501 --server.address=localhost
+    streamlit run simple_ui.py --server.headless=false --server.port=8501 --server.address=localhost
 )
 
 pause

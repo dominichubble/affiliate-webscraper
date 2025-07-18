@@ -5,6 +5,8 @@ Write-Host "===========================================" -ForegroundColor Cyan
 Write-Host "   E-Gaming Affiliate Scraper Web UI" -ForegroundColor Cyan
 Write-Host "===========================================" -ForegroundColor Cyan
 Write-Host ""
+Write-Host "Starting the web interface..." -ForegroundColor Green
+Write-Host ""
 
 # Check if virtual environment exists
 if (Test-Path ".venv\Scripts\python.exe") {
@@ -54,25 +56,6 @@ try {
     Write-Host "✓ Packages installed successfully!" -ForegroundColor Green
 }
 
-# Choose UI version
-Write-Host ""
-Write-Host "Choose which interface you'd like to use:" -ForegroundColor Yellow
-Write-Host "1. Simple UI (recommended for beginners)" -ForegroundColor White
-Write-Host "2. Advanced UI (more features and controls)" -ForegroundColor White
-Write-Host ""
-
-do {
-    $choice = Read-Host "Enter your choice (1 or 2)"
-} while ($choice -notin @('1', '2'))
-
-if ($choice -eq '1') {
-    $appFile = "simple_ui.py"
-    Write-Host "Starting Simple UI..." -ForegroundColor Green
-} else {
-    $appFile = "app.py"
-    Write-Host "Starting Advanced UI..." -ForegroundColor Green
-}
-
 Write-Host ""
 Write-Host "Starting web interface..." -ForegroundColor Yellow
 Write-Host "A browser window will open automatically." -ForegroundColor Cyan
@@ -84,9 +67,9 @@ Write-Host ""
 # Start the Streamlit app
 try {
     if (Test-Path $streamlitCmd) {
-        & $streamlitCmd run $appFile --server.headless=false --server.port=8501 --server.address=localhost
+        & $streamlitCmd run simple_ui.py --server.headless=false --server.port=8501 --server.address=localhost
     } else {
-        & $pythonCmd -m streamlit run $appFile --server.headless=false --server.port=8501 --server.address=localhost
+        & $pythonCmd -m streamlit run simple_ui.py --server.headless=false --server.port=8501 --server.address=localhost
     }
 } catch {
     Write-Host "Error starting the application: $_" -ForegroundColor Red

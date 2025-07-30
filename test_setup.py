@@ -110,10 +110,11 @@ def main():
     
     print("\n" + "=" * 50)
     print("🎯 Setup test completed!")
-    print("\nTo start the UI:")
-    print("  - Double-click start_ui.bat")
+    print("\nTo start the application:")
+    print("  - Double-click START_APPLICATION.bat")
     print("  - Or run: streamlit run simple_ui.py")
     print("\nFor help:")
+    print("  - See USER_GUIDE_SIMPLE.md for non-technical users")
     print("  - See docs/USER_GUIDE.md for detailed instructions")
     print("  - See docs/TECHNICAL.md for advanced configuration")
     

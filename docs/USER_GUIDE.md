@@ -3,10 +3,9 @@
 ## Getting Started
 
 ### Step 1: Launch the Application
-- **Double-click `START_HERE.bat`** (recommended - automatically opens browser)
-- **Or double-click `start_ui.bat`** (alternative method)
-- **Or right-click `start_ui.ps1`** → "Run with PowerShell"
-- The web browser will open automatically
+- **Double-click `EASY_SETUP.bat`** (first-time setup - run once)
+- **Then double-click `START_APPLICATION.bat`** (starts the application)
+- The web browser will open automatically at `http://localhost:8501`
 
 ### Step 2: Check Your Data
 The application will show if your data files are ready:
@@ -151,4 +150,4 @@ If problems persist:
 
 ---
 
-**Need help getting started?** Double-click `START_HERE.bat` and follow the steps!
+**Need help getting started?** Double-click `EASY_SETUP.bat` then `START_APPLICATION.bat` and follow the steps!

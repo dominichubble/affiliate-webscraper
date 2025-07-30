@@ -87,12 +87,12 @@ Examples:
     # Validate input files
     if not os.path.exists(args.operators):
         print(f"Error: Operators file not found: {args.operators}")
-        print("Please create this file with columns: name,website,license,country")
+        print("Please create this file with column: name")
         return 1
     
     if not os.path.exists(args.sites):
         print(f"Error: Sites file not found: {args.sites}")
-        print("Please create this file with columns: name,url,category,priority")
+        print("Please create this file with column: url")
         return 1
     
     # Initialize scraper

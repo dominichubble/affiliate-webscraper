@@ -52,8 +52,27 @@ This application is designed to be easy to use, even if you're not familiar with
 
 - `EASY_SETUP.bat` - Run this once to set up the application
 - `START_APPLICATION.bat` - Run this to start the application
-- `data/affiliate_sites.csv` - List of sites to scrape (you can edit this)
-- `data/egaming_operators.csv` - List of operators to look for
+- `data/affiliate_sites.csv` - List of website URLs to scrape (you can edit this)
+- `data/egaming_operators.csv` - List of operator names to look for
+
+### 📝 Editing Your Data Files
+
+**To add more operators:** Open `data/egaming_operators.csv` in Excel or Notepad and add operator names, one per line:
+
+```
+name
+Bet365
+William Hill
+Your New Operator
+```
+
+**To add more websites:** Open `data/affiliate_sites.csv` in Excel or Notepad and add website URLs, one per line:
+
+```
+url
+https://www.casinoguide.com
+https://www.yoursite.com
+```
 
 ### 🔄 Updating the Application
 

@@ -60,7 +60,7 @@ python src/egaming_scraper_cli.py --help
 
 ## 📋 How It Works
 
-1. **Upload/Check Data**: Gaming operators and affiliate sites from CSV files
+1. **Upload/Check Data**: Gaming operators (names only) and affiliate sites (URLs only) from simple CSV files
 2. **Configure Settings**: Pages per site, speed, quality filters
 3. **Run Scraper**: Automatically searches and finds mentions
 4. **Download Results**: Get CSV files with all findings
@@ -111,7 +111,7 @@ Each result includes:
 
 - Python 3.8+
 - Internet connection
-- CSV files with operators and affiliate sites
+- Simple CSV files with operator names and affiliate site URLs
 
 ## 📞 Support
 

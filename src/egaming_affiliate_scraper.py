@@ -59,7 +59,7 @@ class EGamingAffiliateScraper:
     def load_operators_from_csv(self, csv_file: str) -> None:
         """
         Load e-gaming operators from CSV file
-        Expected columns: name, website, license, country
+        Expected columns: name
         """
         try:
             if not os.path.exists(csv_file):
@@ -88,7 +88,7 @@ class EGamingAffiliateScraper:
     def load_affiliate_sites_from_csv(self, csv_file: str) -> None:
         """
         Load affiliate sites from CSV file
-        Expected columns: name, url, category, priority
+        Expected columns: url
         """
         try:
             if not os.path.exists(csv_file):
@@ -96,7 +96,24 @@ class EGamingAffiliateScraper:
                 return
                 
             df = pd.read_csv(csv_file)
-            self.affiliate_sites = df.to_dict('records')
+            # Convert the simplified format to the expected format
+            affiliate_sites = []
+            for _, row in df.iterrows():
+                url = row.get('url', '')
+                if url:
+                    # Extract site name from URL for identification
+                    from urllib.parse import urlparse
+                    parsed = urlparse(url)
+                    site_name = parsed.netloc.replace('www.', '').split('.')[0].title()
+                    
+                    affiliate_sites.append({
+                        'name': site_name,
+                        'url': url,
+                        'category': 'General',
+                        'priority': 1
+                    })
+            
+            self.affiliate_sites = affiliate_sites
             self.logger.info(f"Loaded {len(self.affiliate_sites)} affiliate sites from {csv_file}")
             
         except Exception as e:
@@ -165,9 +182,6 @@ class EGamingAffiliateScraper:
                     
                     match = {
                         'operator_name': operator_name,
-                        'operator_website': operator.get('website', ''),
-                        'operator_license': operator.get('license', ''),
-                        'operator_country': operator.get('country', ''),
                         'found_pattern': pattern,
                         'url': url,
                         'page_title': title,
